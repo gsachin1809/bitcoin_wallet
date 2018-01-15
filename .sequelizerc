@@ -1,0 +1,18 @@
+'use strict';
+
+/*
+ |  Script .sequelizerc is used to export the config.
+ |
+ |  @author  :  Sachin Gupta<gsachin1809@gmail.com>
+ |    
+ */
+
+ var path = require('path');
+
+ module.exports = {
+    'config'            : path.resolve('app', 'config/config.json'),
+    'migrations-path'   : path.resolve('database', 'migrations'),
+    'models-path'       : path.resolve('app', 'models'),
+    'seeders-path'      : path.resolve('database', 'seeders'),
+    'logging'           : console.log
+ };

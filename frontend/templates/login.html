@@ -1,0 +1,113 @@
+<style media="screen">
+  .login_opezee_logo{
+    padding-top: 10%;
+    width: 60%;
+    padding-bottom: 10%;
+  }
+
+.login_page_layout {
+    width: 50%;
+    margin: 0 auto;
+    border: solid;
+    border-width: 2px;
+    background-color: white;
+    border-color: #dfdee4;
+    margin-top: 50px;
+    padding-bottom: 45px;
+}
+.login_text{
+    font-weight: bold;
+    font-size: 140%;
+    font-family: Trebuchet MS;
+    text-align: center;
+}
+.login_page_button {
+    background-color: #046fc0;
+    color: white;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 100%
+}
+.login_title{
+  width: 76%;
+  padding-bottom: 0px;
+  padding-top: 7%;
+  margin-left: 9%;
+}
+.bootstrap-admin-login-form{
+    max-width: 400px;
+    padding: 30px;
+    margin: 0 auto;
+    /* background-color: #FFF; */
+    border: 0px solid #E5E5E5!important;
+    /* -webkit-border-radius: 5px; */
+    -moz-border-radius: 5px;
+    /* border-radius: 5px; */
+    -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0.05)!important;
+    -moz-box-shadow: 0 0px 0px rgba(0,0,0,0.05)!important;
+    /* box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); */
+
+}
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+           <div class="login_page_layout">
+            <!-- <div class="alert alert-info">
+                <a class="close" data-dismiss="alert" href="#">&times;</a>
+                Press enter key or click the Submit button
+            </div> -->
+            <div  class="bootstrap-admin-login-form" style="
+                                                          border-top-width: 0px;
+                                                          border-left-width: 0px;
+                                                          border-bottom-width: 0px;
+                                                          border-right-width: 0px;
+                                                          padding-top: 0px;
+                                                          padding-left: 0px;
+                                                          padding-bottom: 0px;
+                                                          padding-right: 0px;
+                                                          " >
+                <div class='text-center login_title'>
+                  <h2>
+                    <img class="login_title" src='images/logo.png'/>
+
+                  </h2>
+                </div>
+                <div class="text-center">
+                  <span class="login_text">Login</span>
+                </div>
+
+                <div class="form-group" style="margin-top: 10%;">
+                      <div class='alert alert-danger' ng-show='error.length > 0'>
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{ error }}
+                      </div>
+                      <input class="form-control" type="text" placeholder="Phone Number" ng-model='login.phonenumber' autofocus>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password"  placeholder="Password" ng-model='login.password' ng-show='!is_otp' ng-keypress="onKeyPress($event)">
+                    <div class='err' ng-show='password_error.length > 0'>{{ password_error }}</div>
+                </div>
+                <!-- <div class="form-group">
+                    <span>
+                        <input type="checkbox" ng-model='is_otp'>
+                        Login With OTP
+                    </span>
+                </div> -->
+                <div class="row" style="padding-right:5%;padding-left: 5%;">
+                  <div class="col-lg-6" style="padding-left: 0px;">
+                    <button class="login_page_button btn btn-lg" id="login_button" type="submit" ng-show='!auth_prog' ng-click='admin_login()'>Login</button>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <button class="login_page_button btn btn-lg" id="login_button" type="submit" ng-show='!auth_prog' ng-click='signup()'>SignUp</button>
+                  </div>
+                  <button class="btn btn-lg btn-success" style="width:100%" type="submit" ng-show='auth_prog'><i class='fa fa-spin fa-refresh'></i></button>
+                </div>
+            </div>
+            <div class="text-center">
+
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
