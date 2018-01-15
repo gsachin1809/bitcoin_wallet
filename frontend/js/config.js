@@ -50,7 +50,7 @@ angular.module('pms')
       'views':{
         'app-view':{
           templateUrl:'dashboard.html',
-          // controller : 'AppController'
+          controller : 'DashboardController'
         }
       }
     });
@@ -58,8 +58,8 @@ angular.module('pms')
       url:'/wallet',
       'views':{
         'app-view':{
-          templateUrl:'wallet.html',  
-          // controller : 'AppController'
+          templateUrl:'wallet.html',
+          controller : 'WalletController'
         }
       }
     });
@@ -68,7 +68,7 @@ angular.module('pms')
       'views':{
         'app-view':{
           templateUrl:'sendbitcoin.html',
-          // controller : 'AppController'
+          controller : 'SendBitCoinController'
         }
       }
     });

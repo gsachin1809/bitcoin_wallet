@@ -7,7 +7,10 @@
  .controller('AppController',["$scope", "$timeout", "$state", "AdminLogin", "locker", function($scope,$timeout,$state,AdminLogin,locker){
    console.log("app controller loaded");
    $scope.logout = function(){
-     $state.go('login');
+     if(locker.has('auth_user')){
+       locker.forget('auth_user');
+       $state.go('login');
+     }
    }
    $scope.wallet = function(){
      $state.go('app.wallet');
@@ -23,6 +26,33 @@
 
 
 
+ }]);
+
+/*
+ |  File contains the controller for root of the application
+ |
+ |
+ */
+ angular.module('pms.controller')
+ // .controller('RootController',function($scope){
+.controller('DashboardController',["$scope", "$rootScope", "$state", "$timeout", "locker", "AdminLogin", "User", function($scope,$rootScope,$state,$timeout,locker,AdminLogin,User){
+  console.log("this is DashboardController controller");
+
+  $scope.auth_user = locker.get('auth_user');
+
+    $scope.init = function(){
+      $scope.auth_user = locker.get('auth_user');
+
+      User.dashboard().show($scope.auth_user,function(data){
+        console.log("adminLogin response "+data);
+        console.log(data);
+        $scope.user_information = data.message;
+      },function(errors){
+        console.log("eroor in ");
+        $scope.error = errors.data.errors;
+      });
+
+    }
  }]);
 
 /*
@@ -81,7 +111,7 @@
          $scope.error = data.message;
 
        }
-
+  
      },function(errors){
        console.log("eroor in ");
        var data = errors.data.errors;
@@ -197,6 +227,74 @@
  // .controller('RootController',function($scope){
 .controller('RootController',["$scope", "$rootScope", "$state", "$timeout", "locker", "AdminLogin", function($scope,$rootScope,$state,$timeout,locker,AdminLogin){
   console.log("this is Root controller");
+ }]);
+
+/*
+ |  File contains the controller for root of the application
+ |
+ |
+ */
+ angular.module('pms.controller')
+ // .controller('RootController',function($scope){
+.controller('SendBitCoinController',["$scope", "$rootScope", "$state", "$timeout", "locker", "AdminLogin", "SendBitCoin", function($scope,$rootScope,$state,$timeout,locker,AdminLogin,SendBitCoin){
+  console.log("this is SendBitCoinController controller");
+
+    $scope.send = {
+      'sender_public_address' : '',
+      'confirm_sender_public_address' : '',
+      'amount' : ''
+    };
+    $scope.sendCoin   =   function(){
+      console.log("this is send coin function");
+      $scope.error  =   '';
+      $scope.success  =   '';
+      $scope.auth_user = locker.get('auth_user');
+
+      console.log("function called");
+      if($scope.send.sender_public_address.length <= 0 ){
+        $scope.error  =   'Public address should not be empty.';
+        return;
+      }
+      if($scope.send.confirm_sender_public_address.length <= 0 ){
+        $scope.error  =   'Confirm public address should not be empty.';
+        return;
+      }
+      if($scope.send.amount <= 0 ){
+        $scope.error  =   'Amount should not be less than zero.';
+        return;
+      }
+      if($scope.send.sender_public_address != $scope.send.confirm_sender_public_address ){
+        $scope.error  =   'Address mis-match.';
+        return;
+      }
+      $scope.send.public_key = $scope.send.sender_public_address;
+      $scope.send.login_user = $scope.auth_user.email;
+      $scope.send.login_user_public_key = $scope.auth_user.public_key;
+      SendBitCoin.resource().send($scope.send,function(data){
+        console.log("adminLogin response "+data);
+        console.log(data);
+        if(data.code == 200){
+          $scope.send = {
+            'sender_public_address' : '',
+            'confirm_sender_public_address' : '',
+            'amount' : ''
+          };
+          $scope.success = data.message;
+        }else{
+          $scope.error = data.message;
+        }
+       //  $timeout(function () {
+       //      $state.go('login');
+       // }, 2000);
+      },function(errors){
+        console.log("eroor in ");
+        $scope.error = errors.data.errors;
+
+
+      });
+
+   }
+
  }]);
 
 /*
@@ -381,3 +479,45 @@
  //
  //   $scope.init();
  // });
+
+/*
+ |  File contains the controller for root of the application
+ |
+ |
+ */
+ angular.module('pms.controller')
+ // .controller('RootController',function($scope){
+.controller('WalletController',["$scope", "$rootScope", "$state", "$timeout", "locker", "AdminLogin", "Wallet", function($scope,$rootScope,$state,$timeout,locker,AdminLogin,Wallet){
+  console.log("this is Root controller");
+
+  $scope.auth_user = locker.get('auth_user');  
+
+  $scope.init = function(){
+    var auth_user = locker.get('auth_user');
+    console.log(auth_user);
+    Wallet.resource().wallet(auth_user,function(data){
+      console.log("wallet response ");
+      console.log(data);
+      $scope.wallet_data = data.message;
+      // if(data.code == '200'){
+      //   console.log("success full reutnr ");
+      //   $scope.success = "Successfully Authenticated";
+      //   locker.put('auth_user',data.message);
+      //   $state.go('app.dashboard');
+      // }else{
+      //   console.log("return false");
+      //   $scope.error = data.message;
+      //
+      // }
+
+    },function(errors){
+      console.log("eroor in ");
+      var data = errors.data.errors;
+
+
+    });
+  }
+
+  // $scope.init();
+
+ }]);

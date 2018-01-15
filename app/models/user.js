@@ -15,5 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
+  user.associate = function(models){
+    user.belongsTo(models.balance,{foreignKey:'email', targetKey:'user_email','as':'Balance', constraints: false});
+
+  }
   return user;
 };

@@ -12,5 +12,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
+  transition.associate = function(models){
+    transition.belongsTo(models.user,{foreignKey:'sender_public_key', targetKey:'public_key','as':'sender_id', constraints: false});
+    transition.belongsTo(models.user,{foreignKey:'receiver_public_key', targetKey:'public_key','as':'receiver_id', constraints: false});
+  }
   return transition;
 };

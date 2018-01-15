@@ -15,18 +15,23 @@
 
       					<div class="form-group">
       						<label>Senders Public Address</label>
-      						<input type="text" placeholder="Enter Senders Public Address Here.." class="form-control">
+      						<input type="text" placeholder="Enter Senders Public Address Here.." class="form-control" ng-model="send.sender_public_address">
       					</div>
       					<div class="form-group">
       						<label>Confirm Senders Public Address</label>
-      						<input type="text" placeholder="Enter Confirm Senders Public Address Here.." class="form-control">
+      						<input type="text" placeholder="Enter Confirm Senders Public Address Here.." class="form-control" ng-model="send.confirm_sender_public_address">
       					</div>
       					<div class="form-group">
       						<label>Amount</label>
-      						<input type="text" placeholder="Enter number of bitcone to send" class="form-control">
+      						<input type="text" placeholder="Enter number of bitcone to send" class="form-control" ng-model="send.amount">
       					</div>
 
-      						<button type="button" class="button_css btn btn-success">Send</button>
+      						<button type="button" class="button_css btn btn-success" ng-click="sendCoin()">Send</button>
+                  <div class="pull-right">
+                    <span class="text-danger">  {{ error }}</span>
+                    <span class="text-success">{{ success }} </span>
+
+                  </div>
       					</div>
       				</form>
 				  </div>

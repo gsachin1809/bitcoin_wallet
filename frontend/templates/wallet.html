@@ -10,56 +10,24 @@
     <div class="box-body">
       <table class="table table-striped">
         <thead>
-          <tr>
+          <tr >
             <th>S.No</th>
             <th>Date</th>
             <th>Send / Recevied</th>
-            <th>Balance</th>
+
             <th>Trasaction</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>  
-            <td>2017-12-28 17:46:38</td>
-            <td>	+0.98978583 	</td>
-            <td>	1.49003862 		</td>
-            <td>	1bf300706edfd497772 </td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>2017-12-28 17:46:38</td>
-            <td>	+0.98978583 	</td>
-            <td>	1.49003862 		</td>
-            <td>	1bf300706edfd497772 </td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>2017-12-28 17:46:38</td>
-            <td>	+0.98978583 	</td>
-            <td>	1.49003862 		</td>
-            <td>	1bf300706edfd497772 </td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>2017-12-28 17:46:38</td>
-            <td>	+0.98978583 	</td>
-            <td>	1.49003862 		</td>
-            <td>	1bf300706edfd497772 </td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>2017-12-28 17:46:38</td>
-            <td>	+0.98978583 	</td>
-            <td>	1.49003862 		</td>
-            <td>	1bf300706edfd497772 </td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>2017-12-28 17:46:38</td>
-            <td>	+0.98978583 	</td>
-            <td>	1.49003862 		</td>
-            <td>	1bf300706edfd497772 </td>
+          <tr ng-repeat="(index, wallet) in wallet_data" >
+            <td>{{index+1 }}</td>
+            <td> {{ wallet.createdAt | date:'medium' }}</td>
+
+            <td ng-show="wallet.receiver_public_key == auth_user.public_key">	+ {{ wallet.amount }}	</td>
+            <td ng-show="wallet.sender_public_key == auth_user.public_key">	- {{ wallet.amount }}	</td>
+            
+
+            <td>	{{ wallet.unique_id }} </td>
           </tr>
 
         </tbody>

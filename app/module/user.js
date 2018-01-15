@@ -178,6 +178,56 @@ module.exports 		= 		{
         return defer.promise;
 
     },
+  'show' : function(data){
+
+        var defer     =     Q.defer();
+        var result    =     {}; //Object to return the result
+
+        if(typeof data.email == 'undefined' || data.email.length == 0){
+            result.code       =     400; //For Bad Request
+            result.message    =     'Email should not be empty.'
+            defer.reject(result);
+        }
+
+        // //If No Error while validatin
+        if(typeof result.code == 'undefined'){
+            console.log("executing quer");
+            WebUser.findOne({
+              where : {
+                email : data.email
+              },
+              'include':[
+                {'model':Balance,'as':'Balance'},
+              ]
+            }).then(webuser => {
+                  console.log("retun data");
+                  console.log(webuser);
+                  if(webuser != null){
+                      result.code          =     200;
+                      result.message       =    webuser;
+                      defer.resolve(result);
+                    }else{
+                      result.code          =     404;
+                      result.message       =     "User not found ";
+                      defer.reject(result);
+                    }
+            }).catch(error => {
+                  console.log(error);
+                  result.code          =     500;
+                  result.message       =     "Something went wrong";
+                  defer.reject(result);
+            });
+
+        }else{
+          console.log("error 82");
+          result.code          =     500;
+          result.message       =     "Something went wrong";
+          defer.reject(result);
+        }
+
+        return defer.promise;
+
+    },
 
 
 }

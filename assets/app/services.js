@@ -74,6 +74,22 @@ angular.module('pms.service')
 
 angular.module('pms.service')
 
+.factory('SendBitCoin',["$resource", "$log", "$http", "Base", "locker", "$state", function($resource,$log,$http,Base,locker,$state){
+  var factory   =   {}
+
+  factory.resource    =   function(){
+    var url   =   Base.home_url+'/bitcoin/send';
+    return  $resource(url, {},{
+        'send': { method:'POST',params:{}},
+    });
+  }
+  
+  return factory;
+
+}]);
+
+angular.module('pms.service')
+
 .factory('User',["$resource", "$log", "$http", "Base", "locker", "$state", function($resource,$log,$http,Base,locker,$state){
   var factory   =   {}
 
@@ -82,8 +98,14 @@ angular.module('pms.service')
     return  $resource(url, {},{
         'login': { method:'POST',params:{}},
     });
+  }   
+  factory.dashboard    =   function(){
+    var url   =   Base.home_url+'/user/show';
+    return  $resource(url, {},{
+        'show': { method:'POST',params:{}},
+    });
   }
-  factory.login    =   function(){  
+  factory.login    =   function(){
     var url   =   Base.home_url+'/user/login';
     return  $resource(url, {},{
         'login': { method:'POST',params:{}},
@@ -120,6 +142,22 @@ angular.module('pms.service')
 
     // return logout;
   }
+  return factory;
+
+}]);
+
+angular.module('pms.service')
+
+.factory('Wallet',["$resource", "$log", "$http", "Base", "locker", "$state", function($resource,$log,$http,Base,locker,$state){
+  var factory   =   {}
+
+  factory.resource    =   function(){
+    var url   =   Base.home_url+'/wallet/show';
+    return  $resource(url, {},{
+        'wallet': { method:'POST',params:{}},
+    });
+  }  
+
   return factory;
 
 }]);

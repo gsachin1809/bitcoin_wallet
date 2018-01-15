@@ -11,6 +11,7 @@ module.exports 		= 		{
   'update' : function(data){
 
         var defer     =     Q.defer();
+        var receiver_user = '';
         var result    =     {}; //Object to return the result
         if(typeof data.public_key == 'undefined' || data.public_key.length == 0){
             result.code       =     400; //For Bad Request
@@ -67,8 +68,8 @@ module.exports 		= 		{
                                     var token           = randtoken.generate(16);
                                   Transition.create({
                                     'unique_id'           : token,
-                                    'sender_public_key'   : data.sender_public_key,
-                                    'receiver_public_key' : receiver_user.public_key,
+                                    'sender_public_key'   : data.login_user_public_key,
+                                    'receiver_public_key' : data.public_key,
                                     'amount'              : parseInt(data.amount)
 
                                   }).then( transition_added =>{
@@ -133,11 +134,58 @@ module.exports 		= 		{
         }else{
           console.log("error 82");
           result.code          =     500;
-          result.message       =     "Something went wrong";
+          result.message       =     "Mandantory data not found";
           defer.reject(result);
         }
 
         return defer.promise;
+
+    },
+
+    'show' : function(data){
+      var defer     =     Q.defer();
+      var result    =     {}; //Object to return the result
+
+      console.log("transition show funciton");
+
+      // //If No Error while validatin
+      if(typeof result.code == 'undefined'){
+          console.log("executing quer");
+          Transition.findAll({
+            where : {
+                  $or : [
+                          {sender_public_key : data.public_key},
+                          {receiver_public_key	 : data.public_key}
+                        ]
+                    }
+          }).then(wallet_data => {
+                console.log("retun data");
+                console.log(wallet_data);
+                if(wallet_data != null){
+                  result.code          =     200;
+                  result.message       =     wallet_data;
+                  defer.resolve(result);
+                } else {
+                  result.code          =     404;
+                  result.message       =     "No data found";
+                  defer.reject(result);
+                }
+
+          }).catch(error => {
+                console.log(error);
+                result.code          =     500;
+                result.message       =     "Something went wrong";
+                defer.reject(result);
+          });
+
+      }else{
+        console.log("error 82");
+        result.code          =     500;
+        result.message       =     "Something went wrong";
+        defer.reject(result);
+      }
+
+      return defer.promise;
 
     }
 

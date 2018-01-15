@@ -54,7 +54,7 @@
          $scope.error = data.message;
 
        }
-
+  
      },function(errors){
        console.log("eroor in ");
        var data = errors.data.errors;

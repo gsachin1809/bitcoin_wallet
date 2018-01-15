@@ -7,7 +7,10 @@
  .controller('AppController',function($scope,$timeout,$state,AdminLogin,locker){
    console.log("app controller loaded");
    $scope.logout = function(){
-     $state.go('login');
+     if(locker.has('auth_user')){
+       locker.forget('auth_user');
+       $state.go('login');
+     }
    }
    $scope.wallet = function(){
      $state.go('app.wallet');

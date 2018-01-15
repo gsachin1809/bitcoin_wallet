@@ -8,11 +8,11 @@
   <!-- form start -->
   <div class="form-horizontal">
     <div class="box-body">
-      <ol>
-        <li>Login </li>
-        <li>signup </li>
-        <li>make transtionc </li>
-      </ol>
+      <ul>
+        <li> User Name :  {{ user_information.first_name }} {{ user_information.last_name }} </li>
+        <li>Public Key : {{ user_information.public_key}}</li>
+        <li>Balance : {{ user_information.Balance.amount}}</li>
+      </ul>
 
 
     </div><!-- /.box-body -->

@@ -8,8 +8,14 @@ angular.module('pms.service')
     return  $resource(url, {},{
         'login': { method:'POST',params:{}},
     });
+  }   
+  factory.dashboard    =   function(){
+    var url   =   Base.home_url+'/user/show';
+    return  $resource(url, {},{
+        'show': { method:'POST',params:{}},
+    });
   }
-  factory.login    =   function(){  
+  factory.login    =   function(){
     var url   =   Base.home_url+'/user/login';
     return  $resource(url, {},{
         'login': { method:'POST',params:{}},
