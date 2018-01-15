@@ -2,7 +2,7 @@ angular.module('pms.service')
 
 .factory('AdminLogin',function($resource,$log,$http,Base,locker,$state){
   var factory   =   {}
-  
+
   factory.resource    =   function(){
     var url   =   Base.home_url+'/api_v1/admin/login';
     return  $resource(url, {},{

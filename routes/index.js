@@ -6,6 +6,7 @@ var transitionController  = require(__dirname + '/../app/Controller/transitionCo
 
 //signup for the new user
 router.post('/user/create',UserController.store);
+router.post('/user/login',UserController.login);
 
 //sendbitconi
 router.post('/bitcoin/send',transitionController.update);

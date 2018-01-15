@@ -31,22 +31,14 @@
  |
  */
  angular.module('pms.controller')
- .controller('LoginController',["$scope", "$timeout", "$state", "AdminLogin", "locker", function($scope,$timeout,$state,AdminLogin,locker){
+ .controller('LoginController',["$scope", "$timeout", "$state", "User", "locker", function($scope,$timeout,$state,User,locker){
    $scope.error         = '';
    $scope.success       = '';
    $scope.dashboard_url = '';
    $scope.login = {
-     'phonenumber' : '',
+     'email' : '',
      'password'    : '',
    };
-
-
-   $scope.clear_login_details =  function(){
-     console.log("clear called");
-     $scope.login.phonenumber = '';
-     $scope.login.password    = '';
-   };
-
 
    $scope.onKeyPress = function($event) {
      console.log("onKeyPress");
@@ -57,47 +49,45 @@
 
    $scope.admin_login   =   function(){
      console.log("admin login called");
-     $state.go('app.dashboard');  
-     //
-     // $scope.error  =   '';
-     // $scope.success  =   '';
-     //
-     // if($scope.login.phonenumber.length <= 0 || $scope.login.phonenumber == ''){
-     //   $scope.error  =   'Phone Number should not be empty.';
-     //   return;
-     // } else if($scope.login.phonenumber.length != 10){
-     //   $scope.error  =   'Phone Number should have 10 digit.';
-     //   return;
-     // } else if(isNaN($scope.login.phonenumber)){
-     //   $scope.error  =   'Phone Number should only contains digit.';
-     //   return;
-     // }
-     //
-     // if($scope.login.password.length == 0){
-     //   $scope.error  =   'Password should not be empty';
-     //   return;
-     // }
+     // $state.go('app.dashboard');
 
-    //  if($scope.login.password.length <= 6){
-    //    $scope.error  =   'Password should be at least 6 charater';
-    //    return;
-    //  }
+     $scope.error  =   '';
+     $scope.success  =   '';
 
-     // AdminLogin.resource().login($scope.login,function(data){
-     //   console.log("adminLogin response "+data);
-     //   $scope.success = "Successfully Authenticated";
-     //   locker.put('auth_user',data.user);
-     //   $state.go('app.pred.revenue_analysis.revenue');
-     // },function(errors){
-     //   console.log("eroor in ");
-     //   var data = errors.data.errors;
-     //   if(data.password){
-     //     $scope.error = data.password;
-     //   }else if(data.user_not_found){
-     //     $scope.error = data.user_not_found;
-     //   }
-     //
-     // });
+     if($scope.login.email.length <= 0 || $scope.login.email == ''){
+       $scope.error  =   'Email should not be empty.';
+       return;
+     }
+     if($scope.login.password.length == 0){
+       $scope.error  =   'Password should not be empty';
+       return;
+     }
+
+     if($scope.login.password.length <= 6){
+       $scope.error  =   'Password should be at least 6 charater';
+       return;
+     }
+
+     User.login().login($scope.login,function(data){
+       console.log("adminLogin response ");
+       console.log(data);
+       if(data.code == '200'){
+         console.log("success full reutnr ");
+         $scope.success = "Successfully Authenticated";
+         locker.put('auth_user',data.message);
+         $state.go('app.dashboard');
+       }else{
+         console.log("return false");
+         $scope.error = data.message;
+
+       }
+
+     },function(errors){
+       console.log("eroor in ");
+       var data = errors.data.errors;
+
+
+     });
 
   }
 
@@ -215,47 +205,64 @@
  |
  */
  angular.module('pms.controller')
- .controller('SignUpController',["$scope", "$timeout", "$state", "AdminLogin", "locker", function($scope,$timeout,$state,AdminLogin,locker){
+ .controller('SignUpController',["$scope", "$timeout", "$state", "User", "locker", function($scope,$timeout,$state,User,locker){
    $scope.error         = '';
    $scope.success       = '';
-   $scope.dashboard_url = '';
-   $scope.login = {
-     'phonenumber' : '',
-     'password'    : '',
-   };  
-
-
-   $scope.clear_login_details =  function(){
-     console.log("clear called");
-     $scope.login.phonenumber = '';
-     $scope.login.password    = '';
+   $scope.user = {
+     'first_name' : '',
+     'last_name' : '',
+     'gender' : 'male',
+     'phone_number' : '',
+     'email' : '',
+     'password' : '',
+     'conf_password' : ''
    };
 
-
-   $scope.onKeyPress = function($event) {
-     console.log("onKeyPress");
-       if ($event.keyCode == 13) {
-        $scope.admin_login();
-      }
-   };
-
-   $scope.admin_login   =   function(){
+   $scope.registerUser   =   function(){
      $scope.error  =   '';
      $scope.success  =   '';
-
-     if($scope.login.phonenumber.length <= 0 || $scope.login.phonenumber == ''){
-       $scope.error  =   'Phone Number should not be empty.';
+     console.log("function called");
+     if($scope.user.first_name.length <= 0 ){
+       $scope.error  =   'First Name should not be empty.';
        return;
-     } else if($scope.login.phonenumber.length != 10){
-       $scope.error  =   'Phone Number should have 10 digit.';
+     }
+     if($scope.user.last_name.length <= 0 ){
+       $scope.error  =   'last Name should not be empty.';
        return;
-     } else if(isNaN($scope.login.phonenumber)){
-       $scope.error  =   'Phone Number should only contains digit.';
+     }
+     if($scope.user.email.length <= 0 ){
+       $scope.error  =   'Email should not be empty.';
+       return;
+     }
+     if($scope.user.gender.length <= 0 ){
+       $scope.error  =   'Gender should not be empty.';
+       return;
+     }
+     if($scope.user.password.length <= 0 ){
+       $scope.error  =   'Password should not be empty.';
+       return;
+     }
+     if($scope.user.password.length <= 6 ){
+       $scope.error  =   'Password should be of 6 digit.';
+       return;
+     }
+     if($scope.user.conf_password.length <= 0 ){
+       $scope.error  =   'confirm Password should not be empty.';
        return;
      }
 
-     if($scope.login.password.length == 0){
-       $scope.error  =   'Password should not be empty';
+     if($scope.user.phone_number.length <= 0 || $scope.user.phone_number == ''){
+       $scope.error  =   'Phone Number should not be empty.';
+       return;
+     } else if($scope.user.phone_number.length != 10){
+       $scope.error  =   'Phone Number should have 10 digit.';
+       return;
+     } else if(isNaN($scope.user.phone_number)){
+       $scope.error  =   'Phone Number should only contains digit.';
+       return;
+     }
+     if($scope.user.conf_password != $scope.user.password){
+       $scope.error  =   'Password not match.';
        return;
      }
 
@@ -264,19 +271,16 @@
     //    return;
     //  }
 
-     AdminLogin.resource().login($scope.login,function(data){
+     User.resource().login($scope.user,function(data){
        console.log("adminLogin response "+data);
-       $scope.success = "Successfully Authenticated";
-       locker.put('auth_user',data.user);
-       $state.go('app.pred.revenue_analysis.revenue');
+       $scope.success = "Successfully Added";
+       $timeout(function () {
+           $state.go('login');
+      }, 2000);
      },function(errors){
        console.log("eroor in ");
-       var data = errors.data.errors;
-       if(data.password){
-         $scope.error = data.password;
-       }else if(data.user_not_found){
-         $scope.error = data.user_not_found;
-       }
+       $scope.error = errors.data.errors;
+
 
      });
 
