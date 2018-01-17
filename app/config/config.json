@@ -12,10 +12,13 @@
     "password": "65c83d8a26c66884b82741f24c4fd45763e4604e0844d12c2566de7ca0e286df",
     "database": "d8eje1139thiid",
     "host": "10.147.77.36:3306",
-    "dialect": "mysql",
+    "dialect": "postgres",
     "operatorsAliases": false,
     "post" : 5432,
-    "user":"ec2-184-73-175-95.compute-1.amazonaws.com"
+    "user":"ec2-184-73-175-95.compute-1.amazonaws.com",
+    "dialectOptions": {
+        "ssl": true
+    }
   },
   "test": {
     "username": "root",
