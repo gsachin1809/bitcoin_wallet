@@ -13,7 +13,7 @@
     "host": "ec2-184-73-175-95.compute-1.amazonaws.com",
     "dialect": "mysql"
   },
-  "production": {
+  "test": {
     "username": "root",
     "password": null,
     "database": "bitcoin",
