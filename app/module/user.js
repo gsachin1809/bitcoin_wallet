@@ -5,6 +5,7 @@ var Transition       =    require(__dirname +'/../models').transition;
 var passwordHash  = require('password-hash');
 // Create a token generator with the default settings:
 var randtoken     = require('rand-token');
+var randtoken     = require('bcrypt');
 
 module.exports 		= 		{
 
@@ -106,6 +107,19 @@ module.exports 		= 		{
     },
   'login' : function(data){
 
+    // var myPlaintextPassword = 'password123';
+    // bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+    // // Store hash in your password DB.
+    //     console.log(hash);
+    //     // bcrypt.compare(myPlaintextPassword, hash, function(err, res) {
+    //     // // res == true
+    //     //   console.log(res);
+    //     // });
+    // });
+      console.log("-----");
+      console.log(data);
+      console.log("-----");
+
         var defer     =     Q.defer();
         var result    =     {}; //Object to return the result
 
@@ -130,21 +144,12 @@ module.exports 		= 		{
               }
             }).then(webuser => {
                   console.log("retun data");
-                  console.log(webuser);
+                  // console.log(webuser);
                   if(webuser != null){
-                    var hashedPassword_1  = passwordHash.generate("password123");
-                    var hashedPassword_2  = passwordHash.generate("password123");
-                    // var hashedPassword_2  = 'sha1$3I7HRwy7$cbfdac6008f9cab4083784cbd1874f76618d2a97';
-                    console.log("this is output");
-                    if(hashedPassword_1 == hashedPassword_2){
-                      console.log("true ");
-                    }else{
-                      console.log("false of out");
-                    }
-                    console.log(passwordHash.verify(hashedPassword_1,hashedPassword_2));
-                    console.log(passwordHash.verify('ddddddddddddddd',webuser.password));
-                    // if(passwordHash.verify(hashedPassword_1,webuser.password)){
-                    if(true){
+
+                    // console.log(passwordHash.verify('password123',hashedPassword_2));
+                    if(passwordHash.verify(data.password,webuser.password)){
+                    // if(true){
                       result.code          =     200;
                       result.message       =    webuser;
                       defer.resolve(result);

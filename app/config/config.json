@@ -1,5 +1,5 @@
 {
-  "development_1": {
+  "development": {
     "username": "root",
     "password": null,
     "database": "bitcoin",
@@ -7,7 +7,7 @@
     "dialect": "mysql",
     "operatorsAliases": false
   },
-  "development": {
+  "development_01": {
     "username": "kgdctgsfvlqwee",
     "password": "65c83d8a26c66884b82741f24c4fd45763e4604e0844d12c2566de7ca0e286df",
     "database": "d8eje1139thiid",
