@@ -15,6 +15,7 @@
     "host": "ec2-184-73-175-95.compute-1.amazonaws.com",
     "dialect": "postgres",
     "protocol": "postgres",
+    "logging": false,
     "operatorsAliases": false,
     "post" : 5432,
     "user":"ec2-184-73-175-95.compute-1.amazonaws.com",
