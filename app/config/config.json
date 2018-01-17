@@ -4,14 +4,16 @@
     "password": null,
     "database": "bitcoin",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "operatorsAliases": false
   },
   "production": {
     "username": "kgdctgsfvlqwee",
     "password": "65c83d8a26c66884b82741f24c4fd45763e4604e0844d12c2566de7ca0e286df",
     "database": "d8eje1139thiid",
     "host": "ec2-184-73-175-95.compute-1.amazonaws.com",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "operatorsAliases": false
   },
   "test": {
     "username": "root",
