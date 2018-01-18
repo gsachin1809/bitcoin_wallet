@@ -5,7 +5,7 @@ var Transition       =    require(__dirname +'/../models').transition;
 var passwordHash  = require('password-hash');
 // Create a token generator with the default settings:
 var randtoken     = require('rand-token');
-var randtoken     = require('bcrypt');
+// var randtoken     = require('bcrypt');
 
 module.exports 		= 		{
 
@@ -48,7 +48,7 @@ module.exports 		= 		{
                   console.log(webuser);
                   if(webuser == null){
                     var hashedPassword  = passwordHash.generate(data.password);
-                    var token           = randtoken.generate(16);
+                    var token           = randtoken.generate(64);
                     console.log("pass till 47");
                     WebUser.create({
                       'first_name'      : data.first_name,
